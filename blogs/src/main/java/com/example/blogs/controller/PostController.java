@@ -3,10 +3,10 @@ package com.example.blogs.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.blogs.dto.PostRequestDTO;
@@ -29,7 +29,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public PostResponseDTO getPost(@RequestParam Long id) {
+    public PostResponseDTO getPost(@PathVariable Long id) {
         return postService.getPost(id);
     }
 

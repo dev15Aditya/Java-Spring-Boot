@@ -2,7 +2,7 @@ package com.example.blogs.service;
 
 import org.springframework.stereotype.Service;
 
-import com.example.blogs.config.ResourceNotFoundException;
+import com.example.blogs.configuration.ResourceNotFoundException;
 import com.example.blogs.dto.CommentRequestDTO;
 import com.example.blogs.model.Comment;
 import com.example.blogs.model.Post;

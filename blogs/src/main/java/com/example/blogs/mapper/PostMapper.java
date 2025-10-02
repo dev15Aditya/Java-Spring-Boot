@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import com.example.blogs.dto.PostRequestDTO;
 import com.example.blogs.dto.PostResponseDTO;
 import com.example.blogs.model.Comment;
 import com.example.blogs.model.Post;
 
-@Mapper(componentModel="spring")
+@Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PostMapper {
     Post toEntity(PostRequestDTO dto);
 

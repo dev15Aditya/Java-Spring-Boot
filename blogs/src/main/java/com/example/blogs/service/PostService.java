@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.blogs.config.ResourceNotFoundException;
+import com.example.blogs.configuration.ResourceNotFoundException;
 import com.example.blogs.dto.PostRequestDTO;
 import com.example.blogs.dto.PostResponseDTO;
 import com.example.blogs.mapper.PostMapper;
@@ -18,11 +18,6 @@ import lombok.AllArgsConstructor;
 public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
-
-    // public PostService(PostRepository postRepository, PostMapper postMapper) {
-    //     this.postRepository = postRepository;
-    //     this.postMapper = postMapper;
-    // }
 
     public PostResponseDTO createPost(PostRequestDTO dto) {
         Post post = postMapper.toEntity(dto);

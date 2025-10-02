@@ -1,4 +1,4 @@
-package com.example.blogs.config;
+package com.example.blogs.configuration;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
