@@ -20,10 +20,16 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable=false, unique=true)
     private String email;
 
     private String name;
+
+    @Column(nullable=false)
+    private String password;
+
+    // User | ADMIN
+    private String role;
 }
