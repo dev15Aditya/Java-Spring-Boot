@@ -8,10 +8,10 @@
 		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>DevLink</artifactId>
+	<groupId>com</groupId>
+	<artifactId>devLinks</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>DevLink</name>
+	<name>devLinks</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -50,8 +50,8 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

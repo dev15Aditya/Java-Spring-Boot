@@ -1,4 +1,4 @@
-package com.example.DevLink.model;
+package com.devLinks.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable=false, unique=true)
     private String email;
