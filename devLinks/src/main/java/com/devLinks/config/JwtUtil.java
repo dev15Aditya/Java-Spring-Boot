@@ -11,7 +11,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-    private static final String SECRET = "secret_key";
+    private static final String SECRET = "mine-256-bit-secret-key-here-must-be-at-least-32-characters-long";
     private static final long EXPIRATION_MS = 86400000;
 
     private Key getSigningKey() {
