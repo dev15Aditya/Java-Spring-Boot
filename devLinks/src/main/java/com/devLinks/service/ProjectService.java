@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import com.devLinks.dto.ProjectRequest;
 import com.devLinks.model.DeveloperProfile;
 import com.devLinks.model.Project;
+import com.devLinks.model.User;
 import com.devLinks.repository.DeveloperProfileRepository;
 import com.devLinks.repository.ProjectRepository;
+import com.devLinks.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,9 +19,15 @@ import lombok.RequiredArgsConstructor;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final DeveloperProfileRepository developerProfileRepository;
+    private final AuthService authService;
+    private final UserRepository userRepository;
 
-    public Project addProject(Long userId, ProjectRequest projectRequest){
-        DeveloperProfile profile = developerProfileRepository.findByUserId(userId)
+    public Project addProject(ProjectRequest projectRequest){
+        String email = authService.getAuthenticatedUserEmail();
+        User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+        DeveloperProfile profile = developerProfileRepository.findByUserId(user.getId())
                                     .orElseThrow(() -> new RuntimeException("Profile not found"));
 
         Project project = Project.builder()
@@ -34,14 +42,22 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
-    public List<Project> getProjectsByUser(Long userId){
-        DeveloperProfile profile = developerProfileRepository.findByUserId(userId)
+    public List<Project> getProjectsByUser(){
+        String email = authService.getAuthenticatedUserEmail();
+        User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+        DeveloperProfile profile = developerProfileRepository.findByUserId(user.getId())
                                     .orElseThrow(() -> new RuntimeException("Profile not found"));
         return projectRepository.findByDeveloperProfileId(profile.getId());
     }
 
-    public void deleteProject(Long projectId, Long userId){
-        DeveloperProfile profile = developerProfileRepository.findByUserId(userId)
+    public void deleteProject(Long projectId){
+        String email = authService.getAuthenticatedUserEmail();
+        User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+        DeveloperProfile profile = developerProfileRepository.findByUserId(user.getId())
                                     .orElseThrow(() -> new RuntimeException("Profile not found"));
         Project project = projectRepository.findById(projectId)
                             .orElseThrow(() -> new RuntimeException("Project not found"));

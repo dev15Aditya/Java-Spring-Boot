@@ -17,11 +17,14 @@ public class DeveloperProfileService {
     private final DeveloperProfileRepository developerProfileRepository;
     private final UserRepository userRepository;
 
-    public DeveloperProfile createOrUpdateProfile(Long userId, DeveloperProfileRequest request){
-        User user = userRepository.findById(userId)
+    private final AuthService authService;
+
+    public DeveloperProfile createOrUpdateProfile(DeveloperProfileRequest request){
+        String email = authService.getAuthenticatedUserEmail();
+        User user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
-        DeveloperProfile profile = developerProfileRepository.findByUserId(userId)
+        DeveloperProfile profile = developerProfileRepository.findByUserId(user.getId())
                                     .orElse(DeveloperProfile.builder().user(user).build());
 
         profile.setBio(request.getBio());
@@ -34,7 +37,16 @@ public class DeveloperProfileService {
         return developerProfileRepository.save(profile);
     }
 
-    public DeveloperProfile getProfileByUserId (Long userId){
+    public DeveloperProfile getMyProfile(){
+        String email = authService.getAuthenticatedUserEmail();
+        User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        return developerProfileRepository.findByUserId(user.getId())
+            .orElseThrow(() -> new RuntimeException("Profile not found"));
+    }
+
+    public DeveloperProfile getProfileByUserId(Long userId){
         return developerProfileRepository.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException("Profile not found for this user"));
     }
