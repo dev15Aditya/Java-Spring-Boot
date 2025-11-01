@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +35,6 @@ public class DeveloperProfile {
     private String linkedinUrl;
     private String websiteUrl;
 
-    @ElementCollection
     private List<String> skills;
 
     @OneToOne(fetch=FetchType.LAZY)
