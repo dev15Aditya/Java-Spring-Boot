@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devLinks.dto.ProjectRequest;
-import com.devLinks.model.Project;
+import com.devLinks.dto.ProjectResponse;
 import com.devLinks.service.ProjectService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,15 +25,15 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @PostMapping
-    public ResponseEntity<Project> addProject(@RequestBody ProjectRequest project) {
-        Project newProject = projectService.addProject(project);
+    public ResponseEntity<ProjectResponse> addProject(@RequestBody ProjectRequest project) {
+        ProjectResponse newProject = projectService.addProject(project);
         return ResponseEntity.ok(newProject);
     }
     
 
     @GetMapping
-    public ResponseEntity<List<Project>> getProjects() {
-        List<Project> projects = projectService.getProjectsByUser();
+    public ResponseEntity<List<ProjectResponse>> getProjects() {
+        List<ProjectResponse> projects = projectService.getProjectsByUser();
         return ResponseEntity.ok(projects);
     }
 

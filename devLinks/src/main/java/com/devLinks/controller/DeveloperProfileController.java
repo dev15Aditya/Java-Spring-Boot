@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devLinks.dto.DeveloperProfileRequest;
-import com.devLinks.model.DeveloperProfile;
+import com.devLinks.dto.DeveloperProfileResponse;
 import com.devLinks.service.DeveloperProfileService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,14 +20,14 @@ public class DeveloperProfileController {
     private final DeveloperProfileService developerProfileService;
 
     @PostMapping
-    public ResponseEntity<DeveloperProfile> createOrUpdateProfile(@RequestBody DeveloperProfileRequest request) {
-        DeveloperProfile profile = developerProfileService.createOrUpdateProfile(request);
+    public ResponseEntity<DeveloperProfileResponse> createOrUpdateProfile(@RequestBody DeveloperProfileRequest request) {
+        DeveloperProfileResponse profile = developerProfileService.createOrUpdateProfile(request);
         return ResponseEntity.ok(profile);
     }
 
     @GetMapping("/me")
-    public ResponseEntity<DeveloperProfile> getMyProfile() {
-        DeveloperProfile profile = developerProfileService.getMyProfile();
+    public ResponseEntity<DeveloperProfileResponse> getMyProfile() {
+        DeveloperProfileResponse profile = developerProfileService.getMyProfile();
         return ResponseEntity.ok(profile);
     }
 }

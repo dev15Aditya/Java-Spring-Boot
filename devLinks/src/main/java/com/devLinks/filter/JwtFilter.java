@@ -38,7 +38,8 @@ public class JwtFilter extends OncePerRequestFilter {
             try {
                 email = jwtUtil.extractEmail(token);
             } catch (Exception e) {
-                // Invalid token format
+                System.err.println("JwtFilter: Error extracting email from token: " + e.getMessage());
+                e.printStackTrace();
             }
         }
 
@@ -50,6 +51,8 @@ public class JwtFilter extends OncePerRequestFilter {
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                System.err.println("JwtFilter: Token validation failed for " + email);
             }
         }
 
