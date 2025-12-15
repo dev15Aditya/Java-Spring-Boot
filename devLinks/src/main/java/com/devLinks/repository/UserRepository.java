@@ -9,4 +9,5 @@ import com.devLinks.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
+    Optional<User> findByResetToken(String resetToken);
 }

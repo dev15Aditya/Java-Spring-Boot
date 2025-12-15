@@ -11,6 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="users")
 @Data
@@ -32,4 +34,7 @@ public class User {
 
     // User | ADMIN
     private String role;
+
+    private String resetToken;
+    private LocalDateTime resetTokenExpiry;
 }
