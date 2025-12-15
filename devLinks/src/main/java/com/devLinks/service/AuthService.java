@@ -21,7 +21,7 @@ public class AuthService {
 
     public String signup(AuthRequest request){
         if(userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already existes.");
+            throw new RuntimeException("Email already exists.");
         }
 
         User user = User.builder()
