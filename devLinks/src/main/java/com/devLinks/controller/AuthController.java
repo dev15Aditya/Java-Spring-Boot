@@ -1,5 +1,6 @@
 package com.devLinks.controller;
 
+import com.devLinks.dto.AuthResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,15 +22,19 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public String signup(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponseDto> signup(@RequestBody AuthRequest request) {
         String token = authService.signup(request);
-        return token;
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                AuthResponseDto.builder().token(token).build()
+        );
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponseDto> login(@RequestBody AuthRequest request) {
         String token = authService.login(request);
-        return token;
+        return ResponseEntity.status(HttpStatus.OK).body(
+                AuthResponseDto.builder().token(token).build()
+        );
     }
 
     @ExceptionHandler(RuntimeException.class)
