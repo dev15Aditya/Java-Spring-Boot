@@ -1,8 +1,12 @@
 package com.devLinks.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.devLinks.model.ProfileView;
+import com.devLinks.repository.ProfileViewRepository;
 import org.springframework.stereotype.Service;
 
 import com.devLinks.dto.DeveloperProfileRequest;
