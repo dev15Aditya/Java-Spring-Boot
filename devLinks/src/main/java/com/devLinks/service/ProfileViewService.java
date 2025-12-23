@@ -20,11 +20,10 @@ public class ProfileViewService {
     private final UserRepository userRepository;
     private final AuthService authService;
 
-    public void recordProfileView(Long profileOwnerId) {
+    public void recordProfileView(Long viewerId, Long profileOwnerId) {
         try {
-            String email = authService.getAuthenticatedUserEmail();
-            User viewer = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+            User viewer = userRepository.findById(viewerId)
+                    .orElseThrow(() -> new RuntimeException("Not a valid User"));
 
             User owner = userRepository.findById(profileOwnerId)
                     .orElseThrow(() -> new RuntimeException("Profile not found"));
@@ -41,35 +40,32 @@ public class ProfileViewService {
 
             profileViewRepository.save(view);
         } catch (Exception e){
-            System.err.println("Failed to record profile view: " + e.getMessage());
+            throw new RuntimeException("Failed to record profile view", e);
         }
     }
 
-    public long getTotalViews(){
-        String email = authService.getAuthenticatedUserEmail();
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public long getTotalViews(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Not a valid User"));
 
         return profileViewRepository.getTotalProfileViews(user.getId());
     }
 
-
-    public List<ProfileView> recentViewer(int limit){
+    public List<ProfileView> recentViewer(Long userId, int limit){
         int safeLimit = Math.min(Math.max(limit, 1), 20);
 
-        String email = authService.getAuthenticatedUserEmail();
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Not a valid User"));
 
         Pageable pageable = PageRequest.of(0, safeLimit);
 
-        return profileViewRepository.findAllByProfileOwnerIdOrderByViewedAtDesc(user.getId(), pageable);
+//        return profileViewRepository.findAllByProfileOwnerIdOrderByViewedAtDesc(user.getId(), pageable);
+        return profileViewRepository.getRecentProfileViews(userId);
     }
 
-    public List<ProfileViewStatsDTO> viewsStats(){
-        String email = authService.getAuthenticatedUserEmail();
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public List<ProfileViewStatsDTO> viewsStats(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Not a valid User"));
 
         return profileViewRepository.getProfileViewStats(user.getId());
     }
